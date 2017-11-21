@@ -174,22 +174,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-read">
+          <a href="/read" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            读书
           </a>
         </li>
       
@@ -230,6 +230,202 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/21/在Laravel中使用数据库事务/" itemprop="url">
+                  在Laravel中使用数据库事务
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-21T10:36:41+08:00" content="2017-11-21">
+              2017-11-21
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote class="blockquote-center"><br>不要盲目而残忍地成为，这世界恶意的一部分。<br></blockquote>
+
+<h3 id="使用闭包"><a href="#使用闭包" class="headerlink" title="使用闭包"></a>使用闭包</h3><p>在Laravel中要想在数据库事务中运行一组操作，则可以在 DB facade 中使用 transaction 方法。如果在事务的闭包内抛出异常，事务将会被自动还原。如果闭包运行成功，事务将被自动提交。你不需要担心在使用 transaction 方法时还需要亲自去手动还原或提交事务：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">DB::transaction(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</div><div class="line">    DB::table(<span class="string">'users'</span>)-&gt;update([<span class="string">'votes'</span> =&gt; <span class="number">1</span>]);</div><div class="line"></div><div class="line">    DB::table(<span class="string">'posts'</span>)-&gt;delete();</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="手动创建事务"><a href="#手动创建事务" class="headerlink" title="手动创建事务"></a>手动创建事务</h3><p>如果你想手动处理事务并对还原或提交操作进行完全控制，则可以在 DB facade 使用 beginTransaction 方法：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">DB::beginTransaction(); <span class="comment">//事务开始</span></div><div class="line">   <span class="keyword">if</span>($somethingIsFailed)&#123;</div><div class="line">       DB::rollback(); <span class="comment">//事务失败 操作回滚</span></div><div class="line">       <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">   &#125;</div><div class="line">   DB::commit();  <span class="comment">//事务成功 提交操作</span></div></pre></td></tr></table></figure></p>
+<p>注意： DB facade 的事务方法也可以用来控制 查询语句构造器 及 Eloquent ORM 的事务。</p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>创建表的时候一定要使用InnoDB存储引擎<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></div><div class="line"><span class="function">   </span>&#123;</div><div class="line">       Schema::create(<span class="string">'fetch_taobao_billno_task_nos'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</div><div class="line">           $table-&gt;engine = <span class="string">'InnoDB'</span>;</div><div class="line">           $table-&gt;increments(<span class="string">'id'</span>);</div><div class="line">           ......</div><div class="line">       &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>如何查看某一张表使用的存储引擎<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show create table 表名;</div></pre></td></tr></table></figure></p>
+<p>修改某一张表的存储引擎<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alter table bulk_tb_billnos engine=innodb</div><div class="line">alter table bulk_tb_billnos engine=myisam</div></pre></td></tr></table></figure></p>
+<p>看你的mysql当前默认的存储引擎<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show variables like <span class="string">'%storage_engine%'</span>;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/19/使用vue2-0实现一个TODO应用/" itemprop="url">
+                  使用vue2.0实现一个TODO应用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-19T11:58:43+08:00" content="2017-11-19">
+              2017-11-19
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><blockquote class="blockquote-center"><br>朋友，然后爱人，最后什么都不是。<br></blockquote><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"js/bootstrap.min.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-8 col-md-offset-2"</span> <span class="attr">style</span>=<span class="string">"margin-top: 90px;"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel panel-default"</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel-heading"</span>&gt;</span>vue demo<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel-body"</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">h1</span>&gt;</span>事件个数&#123;&#123; todoCount &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">todo-items</span> <span class="attr">:todos</span>=<span class="string">"todos"</span>&gt;</span><span class="tag">&lt;/<span class="name">todo-items</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">todo-form</span> <span class="attr">:todos</span>=<span class="string">"todos"</span>&gt;</span><span class="tag">&lt;/<span class="name">todo-form</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/x-template"</span> <span class="attr">id</span>=<span class="string">"todo-items"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="javascript">  &lt;ul <span class="class"><span class="keyword">class</span></span>=<span class="string">"list-group"</span>&gt;</span></div><div class="line"><span class="javascript">    &lt;li <span class="class"><span class="keyword">class</span></span>=<span class="string">"list-group-item"</span>  v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">"&#123; 'text-danger':todo.status &#125;"</span>  v-<span class="keyword">for</span>=<span class="string">"(todo, index) in todos"</span>&gt;</span></div><div class="line"><span class="undefined">      &#123;&#123; todo.title&#125;&#125;</span></div><div class="line"><span class="javascript">      &lt;button <span class="class"><span class="keyword">class</span></span>=<span class="string">"btn btn-danger btn-xs pull-right"</span> v-on:click=<span class="string">"deleteTodo(index)"</span>&gt;删除&lt;<span class="regexp">/button&gt;</span></span></div><div class="line"><span class="javascript">      &lt;button <span class="class"><span class="keyword">class</span></span>=<span class="string">"btn btn-xs pull-right"</span> v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">"[todo.status ? 'btn-danger' : 'btn-success' ]"</span> v-on:click=<span class="string">"complete(todo)"</span>&gt;</span></div><div class="line"><span class="javascript">        &#123;&#123; todo.status ? <span class="string">'撤销'</span> : <span class="string">'完成'</span> &#125;&#125;</span></div><div class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/x-template"</span> <span class="attr">id</span>=<span class="string">"todo-forms"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="xml">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>=<span class="string">"addTodo(newTodo)"</span>&gt;</span></span></div><div class="line"><span class="javascript">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-group"</span>&gt;</span></div><div class="line"><span class="xml">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"add-todo"</span>&gt;</span>事件名称<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span></div><div class="line"><span class="javascript">      &lt;input type=<span class="string">"text"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-control"</span> id=<span class="string">"add-todo"</span> v-model=<span class="string">"newTodo.title"</span> &gt;</span></div><div class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line"><span class="javascript">    &lt;button type=<span class="string">"submit"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"btn btn-default"</span>&gt;添加事件&lt;<span class="regexp">/button&gt;</span></span></div><div class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="javascript">    Vue.component(<span class="string">'todo-form'</span>, &#123;</span></div><div class="line"><span class="javascript">        template:<span class="string">'#todo-forms'</span>,</span></div><div class="line"><span class="javascript">        props: [<span class="string">'todos'</span>],</span></div><div class="line"><span class="undefined">        data() &#123;</span></div><div class="line"><span class="javascript">            <span class="keyword">return</span> &#123;</span></div><div class="line"><span class="javascript">                newTodo: &#123;<span class="string">'title'</span>: <span class="string">''</span>, <span class="string">'status'</span>: <span class="literal">false</span>&#125;</span></div><div class="line"><span class="undefined">            &#125;;</span></div><div class="line"><span class="undefined">        &#125;,</span></div><div class="line"><span class="undefined">        methods: &#123;</span></div><div class="line"><span class="undefined">            addTodo(newTodo) &#123;</span></div><div class="line"><span class="javascript">                <span class="keyword">this</span>.todos.push(newTodo);</span></div><div class="line"><span class="javascript">                <span class="keyword">this</span>.newTodo = &#123;<span class="string">'title'</span>: <span class="string">''</span>, <span class="string">'status'</span>: <span class="literal">false</span>&#125;;</span></div><div class="line"><span class="undefined">            &#125;</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">    &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="javascript">    Vue.component(<span class="string">'todo-items'</span>, &#123;</span></div><div class="line"><span class="javascript">      template:<span class="string">'#todo-items'</span>,</span></div><div class="line"><span class="javascript">      props: [<span class="string">'todos'</span>],</span></div><div class="line"><span class="undefined">      methods: &#123;</span></div><div class="line"><span class="undefined">          deleteTodo(index) &#123;</span></div><div class="line"><span class="javascript">              <span class="keyword">this</span>.todos.splice(index, <span class="number">1</span>);</span></div><div class="line"><span class="undefined">          &#125;,</span></div><div class="line"><span class="undefined">          complete(todo) &#123;</span></div><div class="line"><span class="undefined">              todo.status = !todo.status;</span></div><div class="line"><span class="undefined">          &#125;</span></div><div class="line"><span class="undefined">      &#125;</span></div><div class="line"><span class="undefined">  &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="javascript">  <span class="keyword">new</span> Vue(&#123;</span></div><div class="line"><span class="javascript">      el:<span class="string">'#app'</span>,</span></div><div class="line"><span class="undefined">      data: &#123;</span></div><div class="line"><span class="javascript">          message: <span class="string">'yangzie'</span>,</span></div><div class="line"><span class="undefined">          todos: [</span></div><div class="line"><span class="javascript">              &#123;<span class="string">'title'</span>: <span class="string">'吃早餐'</span>, <span class="string">'status'</span>: <span class="literal">false</span>&#125;,</span></div><div class="line"><span class="javascript">              &#123;<span class="string">'title'</span>: <span class="string">'洗漱'</span>, <span class="string">'status'</span>: <span class="literal">false</span>&#125;</span></div><div class="line"><span class="undefined">          ]</span></div><div class="line"><span class="undefined">      &#125;,</span></div><div class="line"><span class="undefined">      computed: &#123;</span></div><div class="line"><span class="undefined">          todoCount() &#123;</span></div><div class="line"><span class="javascript">              <span class="keyword">return</span> <span class="keyword">this</span>.todos.length;</span></div><div class="line"><span class="undefined">          &#125;</span></div><div class="line"><span class="undefined">      &#125;</span></div><div class="line"><span class="undefined">  &#125;);</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -544,212 +740,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/11/08/无法在服务器使用curl命令访问https域名的问题/" itemprop="url">
-                  无法在服务器使用curl命令访问https域名的问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-11-08T09:06:50+08:00" content="2017-11-08">
-              2017-11-08
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote class="blockquote-center"><br>不要说我们没有警告过你<br></blockquote>
-
-<p>今天有开发同学说无法在服务器使用curl命令访问https域名，提示curl: (35) SSL connect error，原因是nss版本有点旧了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y update nss</div></pre></td></tr></table></figure></p>
-<p>更新一下，重新curl即可！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/11/07/使用laravel生成条形码/" itemprop="url">
-                  使用laravel生成条形码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-11-07T09:06:07+08:00" content="2017-11-07">
-              2017-11-07
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote class="blockquote-center"><br>我已经和垃圾学校的某些垃圾学生呆够了，再他妈不努力，你这辈子就只能和他们打交道了。<br></blockquote>
-
-<h3 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h3><p>项目地址<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="comment">//packagist.org/packages/codeitnowin/barcode</span></div></pre></td></tr></table></figure></p>
-<p>使用composer安装<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer <span class="keyword">require</span> codeitnowin/barcode</div></pre></td></tr></table></figure></p>
-<p>无需配置</p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="生成二维码"><a href="#生成二维码" class="headerlink" title="生成二维码"></a>生成二维码</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">CodeItNow</span>\<span class="title">BarcodeBundle</span>\<span class="title">Utils</span>\<span class="title">QrCode</span>;</div><div class="line"></div><div class="line">$qrCode = <span class="keyword">new</span> QrCode();</div><div class="line">$qrCode</div><div class="line">    -&gt;setText(<span class="string">'QR code by codeitnow.in'</span>)</div><div class="line">    -&gt;setSize(<span class="number">300</span>)</div><div class="line">    -&gt;setPadding(<span class="number">10</span>)</div><div class="line">    -&gt;setErrorCorrection(<span class="string">'high'</span>)</div><div class="line">    -&gt;setForegroundColor(<span class="keyword">array</span>(<span class="string">'r'</span> =&gt; <span class="number">0</span>, <span class="string">'g'</span> =&gt; <span class="number">0</span>, <span class="string">'b'</span> =&gt; <span class="number">0</span>, <span class="string">'a'</span> =&gt; <span class="number">0</span>))</div><div class="line">    -&gt;setBackgroundColor(<span class="keyword">array</span>(<span class="string">'r'</span> =&gt; <span class="number">255</span>, <span class="string">'g'</span> =&gt; <span class="number">255</span>, <span class="string">'b'</span> =&gt; <span class="number">255</span>, <span class="string">'a'</span> =&gt; <span class="number">0</span>))</div><div class="line">    -&gt;setLabel(<span class="string">'Scan Qr Code'</span>)</div><div class="line">    -&gt;setLabelFontSize(<span class="number">16</span>)</div><div class="line">    -&gt;setImageType(QrCode::IMAGE_TYPE_PNG)</div><div class="line">;</div><div class="line"><span class="keyword">echo</span> <span class="string">'&lt;img src="data:'</span>.$qrCode-&gt;getContentType().<span class="string">';base64,'</span>.$qrCode-&gt;generate().<span class="string">'" /&gt;'</span>;</div></pre></td></tr></table></figure>
-<h4 id="生成条形码"><a href="#生成条形码" class="headerlink" title="生成条形码"></a>生成条形码</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">CodeItNow</span>\<span class="title">BarcodeBundle</span>\<span class="title">Utils</span>\<span class="title">BarcodeGenerator</span>;</div><div class="line"></div><div class="line">$barcode = <span class="keyword">new</span> BarcodeGenerator();</div><div class="line">$barcode-&gt;setText(<span class="string">"0123456789"</span>);</div><div class="line">$barcode-&gt;setType(BarcodeGenerator::Code128);</div><div class="line">$barcode-&gt;setScale(<span class="number">2</span>);</div><div class="line">$barcode-&gt;setThickness(<span class="number">25</span>);</div><div class="line">$barcode-&gt;setFontSize(<span class="number">10</span>);</div><div class="line">$code = $barcode-&gt;generate();</div><div class="line"></div><div class="line"><span class="keyword">echo</span> <span class="string">'&lt;img src="data:image/png;base64,'</span>.$code.<span class="string">'" /&gt;'</span>;</div></pre></td></tr></table></figure>
-<p>更多参见说明文档</p>
-<blockquote>
-<p><a href="https://packagist.org/packages/codeitnowin/barcode" target="_blank" rel="external">https://packagist.org/packages/codeitnowin/barcode</a><br><a href="http://www.barcodebakery.com/" target="_blank" rel="external">http://www.barcodebakery.com/</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -789,8 +784,8 @@
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">204</span>
+            <a href="/">
+              <span class="site-state-item-count">206</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -800,7 +795,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">99</span>
+                <span class="site-state-item-count">100</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

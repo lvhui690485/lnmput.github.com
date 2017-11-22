@@ -194,6 +194,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-translate">
+          <a href="/tags/translate" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file"></i> <br />
+            
+            翻译
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
@@ -230,6 +240,108 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/10/php和python中的正则表达式/" itemprop="url">
+                  php和python中的正则表达式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-10T15:10:33+08:00" content="2017-05-10">
+              2017-05-10
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><blockquote class="blockquote-center"><br>现在的孩子越来越早熟才炖了5分钟就烂了<br></blockquote></p>
+<h2 id="php"><a href="#php" class="headerlink" title="php"></a>php</h2><h3 id="preg-match"><a href="#preg-match" class="headerlink" title="preg_match"></a>preg_match</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$str = <span class="string">'&lt;a&gt;&lt;b&gt;&lt;c&gt;'</span>;</div><div class="line">preg_match(<span class="string">"/&lt;(\w)+&gt;/"</span>, $str, $abc);</div><div class="line">dd($abc);</div></pre></td></tr></table></figure>
+<p>结果: <code>[&#39;&lt;a&gt;&#39;, &#39;a&#39;]</code></p>
+<h3 id="preg-match-all"><a href="#preg-match-all" class="headerlink" title="preg_match_all"></a>preg_match_all</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$str = <span class="string">'&lt;a&gt;&lt;b&gt;&lt;c&gt;'</span>;</div><div class="line">preg_match_all(<span class="string">"/&lt;(\w)+&gt;/"</span>, $str, $abc);</div><div class="line">dd($abc);</div></pre></td></tr></table></figure>
+<p>结果: <code>[[&#39;&lt;a&gt;&#39;,&#39;&lt;b&gt;&#39;,&#39;&lt;c&gt;&#39;],[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]]</code></p>
+<h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><h3 id="re-match"><a href="#re-match" class="headerlink" title="re.match"></a>re.match</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line">line = <span class="string">'&lt;a&gt;&lt;b&gt;&lt;c&gt;'</span></div><div class="line">reg = <span class="string">"&lt;(\w)&gt;"</span></div><div class="line">res = re.match(reg, line)</div><div class="line"><span class="keyword">if</span> res:</div><div class="line">print(res.group(<span class="number">1</span>))</div></pre></td></tr></table></figure>
+<p>结果: <code>a</code></p>
+<h3 id="re-findall"><a href="#re-findall" class="headerlink" title="re.findall"></a>re.findall</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line">line = <span class="string">'&lt;a&gt;&lt;b&gt;&lt;c&gt;'</span></div><div class="line">reg = <span class="string">"&lt;(\w)&gt;"</span></div><div class="line">res = re.findall(reg, line)</div><div class="line"><span class="keyword">if</span> res:</div><div class="line">print(res)</div></pre></td></tr></table></figure>
+<p>结果: <code>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -636,103 +748,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/13/php中如何使用引用/" itemprop="url">
-                  php中如何使用引用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-13T09:29:20+08:00" content="2017-04-13">
-              2017-04-13
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote class="blockquote-center"><br>一想到时光匆匆，竟经不起半点挥霍，我就会对时间吝啬起来，因为此刻已过，便永不复还。<br></blockquote>
-
-<h3 id="实例一"><a href="#实例一" class="headerlink" title="实例一"></a>实例一</h3><p>使用foreach修改数组<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">packedData</span><span class="params">($data, $key, $type = <span class="string">'delete'</span>)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="comment">// 删除data中的必要数据</span></div><div class="line">        <span class="keyword">if</span> ($type == <span class="string">'update'</span>) &#123;</div><div class="line">            <span class="keyword">foreach</span> ($data <span class="keyword">as</span> &amp;$order) &#123;</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'useragent'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'ad_id'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'ad_channel'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'ad_url'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'ad_referer'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'ad_referer_host'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'ad_url_param'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'utm_source'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'utm_medium'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'utm_term'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'utm_content'</span>]);</div><div class="line">                <span class="keyword">unset</span>($order[<span class="string">'utm_campaign'</span>]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> [</div><div class="line">            <span class="string">'key'</span> =&gt; $key,</div><div class="line">            <span class="string">'data'</span> =&gt; $data</div><div class="line">        ];</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<h3 id="实例二"><a href="#实例二" class="headerlink" title="实例二"></a>实例二</h3><p>在没有返回值的情况下修改数组中的值<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Route::get(<span class="string">'hehe'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</div><div class="line">    $datas = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</div><div class="line">    haha($datas);</div><div class="line">    dump($datas);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">haha</span><span class="params">(&amp;$datas)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">foreach</span> ($datas <span class="keyword">as</span> $data) &#123;</div><div class="line">        $data = $data * <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $datas;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -778,7 +793,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">206</span>
+              <span class="site-state-item-count">207</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -788,7 +803,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">100</span>
+                <span class="site-state-item-count">99</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

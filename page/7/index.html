@@ -194,6 +194,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-translate">
+          <a href="/tags/translate" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file"></i> <br />
+            
+            翻译
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
@@ -230,6 +240,108 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/21/swoole结合php实现多任务异步处理/" itemprop="url">
+                  swoole结合php实现多任务异步处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-21T18:18:42+08:00" content="2017-09-21">
+              2017-09-21
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><blockquote class="blockquote-center"><br>走出来的是因为从来没进去过, 进去了的, 我从没见过走出来的<br></blockquote><br>大部分时候我们项目的业务逻辑是同步阻塞运行的，但是有些时候会遇到一些耗时较大的操作，比如向十万个用户群发通知邮件，我们的程序不可能等待十万次循环后再执行其他操作，这种时候我们会采用异步操作，由 worker 进程向 task 进程发送任务，task 进程处理完全部任务之后通过onFinish回调函数通知 worker 进程。</p>
+<h3 id="创建命令行类"><a href="#创建命令行类" class="headerlink" title="创建命令行类"></a>创建命令行类</h3><p>创建application/console/AsyncTask.php文件<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Console</span>;</div><div class="line"></div><div class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Command</span>;</div><div class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Input</span>;</div><div class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Output</span>;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AsyncTask</span> <span class="keyword">extends</span> <span class="title">Command</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    <span class="keyword">protected</span> $server;</div><div class="line">    </div><div class="line">    <span class="comment">// 设置命令行名称,以及命令行描述</span></div><div class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">configure</span><span class="params">()</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;setName(<span class="string">'task:start'</span>)-&gt;setDescription(<span class="string">'Start TCP(Timer) Server!'</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span><span class="params">(Input $input, Output $output)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;server = <span class="keyword">new</span> \swoole_server(<span class="string">"0.0.0.0"</span>, <span class="number">9501</span>);</div><div class="line">        <span class="keyword">$this</span>-&gt;server-&gt;set([</div><div class="line">            <span class="string">'worker_num'</span>      =&gt; <span class="number">4</span>,</div><div class="line">            <span class="string">'daemonize'</span>       =&gt; <span class="keyword">false</span>,</div><div class="line">            <span class="string">'task_worker_num'</span> =&gt; <span class="number">4</span>  <span class="comment"># task 进程数</span></div><div class="line">        ]);</div><div class="line">        <span class="keyword">$this</span>-&gt;server-&gt;on(<span class="string">'Start'</span>, [<span class="keyword">$this</span>, <span class="string">'onStart'</span>]);</div><div class="line">        <span class="keyword">$this</span>-&gt;server-&gt;on(<span class="string">'Connect'</span>, [<span class="keyword">$this</span>, <span class="string">'onConnect'</span>]);</div><div class="line">        <span class="keyword">$this</span>-&gt;server-&gt;on(<span class="string">'Receive'</span>, [<span class="keyword">$this</span>, <span class="string">'onReceive'</span>]);</div><div class="line">        <span class="keyword">$this</span>-&gt;server-&gt;on(<span class="string">'Task'</span>, [<span class="keyword">$this</span>, <span class="string">'onTask'</span>]);</div><div class="line">        <span class="keyword">$this</span>-&gt;server-&gt;on(<span class="string">'Finish'</span>, [<span class="keyword">$this</span>, <span class="string">'onFinish'</span>]);</div><div class="line">        <span class="keyword">$this</span>-&gt;server-&gt;on(<span class="string">'Close'</span>, [<span class="keyword">$this</span>, <span class="string">'onClose'</span>]);</div><div class="line">        <span class="keyword">$this</span>-&gt;server-&gt;start();</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 主进程启动时回调函数</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">onStart</span><span class="params">(\swoole_server $server)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"开始\n"</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 建立连接时回调函数</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">onConnect</span><span class="params">(\swoole_server $server, $fd, $from_id)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"连接上了\n"</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">onReceive</span><span class="params">(\swoole_server $server, $fd, $from_id, $data)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="comment">//echo "message: &#123;$data&#125; form Client: &#123;$fd&#125; \n";</span></div><div class="line">        <span class="comment">// 投递异步任务</span></div><div class="line">        $task_id = $server-&gt;task($data);</div><div class="line">       <span class="comment">// echo "Dispath AsyncTask: id=&#123;$task_id&#125;\n";</span></div><div class="line">        <span class="comment">// 将受到的客户端消息再返回给客户端</span></div><div class="line">        $server-&gt;send($fd, <span class="string">"Message form Server: &#123;$data&#125;， task_id: &#123;$task_id&#125;"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">// 异步任务处理函数</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">onTask</span><span class="params">(\swoole_server $server, $task_id, $from_id, $data)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&#123;$task_id&#125;, 任务处理 \n"</span>;</div><div class="line">        $server-&gt;finish(<span class="string">"$data -&gt; OK"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">onFinish</span><span class="params">(\swoole_server $server, $task_id, $data)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"结束"</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 关闭连时回调函数</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">onClose</span><span class="params">(\swoole_server $server, $fd, $from_id)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"结束\n"</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>文件所在 application/command.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"> </div><div class="line"><span class="keyword">return</span> [</div><div class="line">    <span class="string">'app\console\AsyncTask'</span>,</div><div class="line">];</div></pre></td></tr></table></figure></p>
+<h3 id="启动任务"><a href="#启动任务" class="headerlink" title="启动任务"></a>启动任务</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php think task:start</div></pre></td></tr></table></figure>
+<h3 id="使用-telnet-进行测试"><a href="#使用-telnet-进行测试" class="headerlink" title="使用 telnet 进行测试"></a>使用 telnet 进行测试</h3><p>建议使用 xshell<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">telnet <span class="number">60.205</span><span class="number">.200</span><span class="number">.40</span> <span class="number">9501</span></div></pre></td></tr></table></figure></p>
+<p>连接上服务器后，输入hello回车，发送消息给 TCP 服务器，将受到一下回执</p>
+<blockquote>
+<p><a href="http://www.iswoole.com/article/2066" target="_blank" rel="external">http://www.iswoole.com/article/2066</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -630,110 +742,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/12/mysql使用profile进行语句优化/" itemprop="url">
-                  mysql使用profile进行语句优化
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-09-12T10:49:53+08:00" content="2017-09-12">
-              2017-09-12
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><blockquote class="blockquote-center"><br>只是我回首来时路的每一步都走的好孤独。<br></blockquote><br>Profiling只是针对单个session的，如果session结束，profiling信息将丢失,可以在 <code>INFORMATION_SCHEMA</code>中的<code>profiling</code>表中获取profiling信息.</p>
-<h3 id="查看profiling系统变量"><a href="#查看profiling系统变量" class="headerlink" title="查看profiling系统变量"></a>查看profiling系统变量</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show variables like '%profil%';  </div><div class="line">+<span class="comment">------------------------+-------+</span></div><div class="line">| Variable_name          | Value |</div><div class="line">+<span class="comment">------------------------+-------+</span></div><div class="line">| have_profiling         | YES   |  #只读变量,用于控制是否由系统变量开启或禁用profiling;</div><div class="line">| profiling              | OFF   |  #开启或关闭SQL语句剖析功能;</div><div class="line">| profiling_history_size | 15    |  #设置保留profiling的数目,缺省为15,范围为0至100,为0时将禁用profiling;</div><div class="line">+<span class="comment">------------------------+-------+</span></div></pre></td></tr></table></figure>
-<h3 id="查看是否开启"><a href="#查看是否开启" class="headerlink" title="查看是否开启"></a>查看是否开启</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> @@profiling;</div></pre></td></tr></table></figure>
-<h3 id="设置开启"><a href="#设置开启" class="headerlink" title="设置开启"></a>设置开启</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SET</span> profiling = <span class="number">1</span>;</div></pre></td></tr></table></figure>
-<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">show</span> <span class="keyword">profiles</span>;</div></pre></td></tr></table></figure>
-<h3 id="查看具体的某一条sql"><a href="#查看具体的某一条sql" class="headerlink" title="查看具体的某一条sql"></a>查看具体的某一条sql</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">show</span> profile all <span class="keyword">for</span> <span class="keyword">query</span> <span class="number">18</span> ;</div></pre></td></tr></table></figure>
-<h3 id="查看cpu信息"><a href="#查看cpu信息" class="headerlink" title="查看cpu信息"></a>查看cpu信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">show</span> profile cpu <span class="keyword">for</span> <span class="keyword">query</span> <span class="number">18</span> ;</div></pre></td></tr></table></figure>
-<h3 id="查看内存"><a href="#查看内存" class="headerlink" title="查看内存"></a>查看内存</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">show</span> profile <span class="keyword">memory</span> <span class="keyword">for</span> <span class="keyword">query</span> <span class="number">18</span> ;</div></pre></td></tr></table></figure>
-<blockquote>
-<p><a href="http://www.ywnds.com/?p=8677" target="_blank" rel="external">http://www.ywnds.com/?p=8677</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -779,7 +787,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">206</span>
+              <span class="site-state-item-count">207</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -789,7 +797,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">100</span>
+                <span class="site-state-item-count">99</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>http://yangguoqi.me/2017/11/23/blade%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%9A%84-prepend%E6%8C%87%E4%BB%A4/</loc>
+    <lastmod>2017-11-23T01:57:24.860Z</lastmod>
+    <data>
+        <display>
+        <title>blade模板引擎的@prepend指令</title>
+        <pubTime>2017-11-23T01:18:36.000Z</pubTime>
+        
+        <tag>laravel</tag>
+         
+        <tag>translate</tag>
+         
+        <tag>blade</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yangguoqi.me/2017/11/22/laravel5-5%E4%B8%AD%E6%96%B0%E7%9A%84%E8%B7%AF%E7%94%B1%E6%96%B9%E6%B3%95/</loc>
     <lastmod>2017-11-22T01:29:41.765Z</lastmod>
     <data>
@@ -13,9 +34,9 @@
         
         <tag>laravel</tag>
          
-        <tag>翻译</tag>
-         
         <tag>translate</tag>
+         
+        <tag>翻译</tag>
          
          
            
@@ -3656,9 +3677,9 @@
         <title>centos下ftp相关设置</title>
         <pubTime>2016-07-25T14:56:59.000Z</pubTime>
         
-        <tag>centos</tag>
-         
         <tag>linux</tag>
+         
+        <tag>centos</tag>
          
         <tag>ftp</tag>
          

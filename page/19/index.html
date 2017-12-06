@@ -262,6 +262,103 @@
             
               
                 
+                <a class="post-title-link" href="/2017/07/16/mysql中的字符和字节/" itemprop="url">
+                  mysql中的字符和字节
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-16T09:49:49+08:00" content="2017-07-16">
+              2017-07-16
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><blockquote class="blockquote-center"><br>只是我回首来时路的每一步都走的好孤独。<br></blockquote><br>1.一个汉字占多少长度与编码有关：<br> UTF－8：一个汉字＝3个字节<br> GBK：一个汉字＝2个字节<br>2.varchar(n)表示n个字符，无论汉字和英文，Mysql都能存入n个字符，仅是实际字节长度有所区别</p>
+<p>php 把一个汉字认作几个字节:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">header(<span class="string">'Content-Type:text/html;charset=UTF-8'</span>);</div><div class="line">$str=<span class="string">'我'</span>;</div><div class="line"><span class="keyword">echo</span> strlen($str);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>输出 3 , 证明在 UTF-8编码下, 一个汉字被认作3个字节长度.</p>
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><p>char(2) 和 varchar(2) 都能存储 2个汉字,或者是两个英文字符.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/07/15/websql的使用/" itemprop="url">
                   websql的使用
                 </a>
@@ -665,106 +762,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/15/php使用fsockopen传送post到别的url并取得回应的内容/" itemprop="url">
-                  php使用fsockopen传送post到别的url并取得回应的内容
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-15T14:49:22+08:00" content="2017-06-15">
-              2017-06-15
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><blockquote class="blockquote-center"><br>几年前踏上火车那一刻都还没有意识到，从此故乡只有冬夏，再无春秋。<br></blockquote><br>如果不需要傳送參數或是使用GET method傳送</p>
-<p>可以直接使用fopen()或是file_get_contents()函式獲得回應內容<br>但是如果需要不經過表單就送出POST給某URL<br>就需要使用curl相關函式或是fsockopen()傳送</p>
-<p>curl的用法比較簡單<br>可以咕狗看看(但是php必須要先安裝curl才可以用)<br>這邊要講的是fsockopen()</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//接收POST參數的URL</span></div><div class="line">$url = <span class="string">'http://www.google.com'</span>;</div><div class="line"><span class="comment">//POST參數,在這個陣列裡,索引是name,值是value,沒有限定組數</span></div><div class="line">$postdata = <span class="keyword">array</span>(<span class="string">'post_name'</span>=&gt;<span class="string">'post_value'</span>,<span class="string">'acc'</span>=&gt;<span class="string">'hsin'</span>,<span class="string">'nick'</span>=&gt;<span class="string">'joe'</span>);</div><div class="line"><span class="comment">//函式回覆的值就是取得的內容</span></div><div class="line">$result = sendpost($url,$postdata);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendpost</span><span class="params">($url, $data)</span></span>&#123;</div><div class="line"><span class="comment">//先解析url 取得的資訊可以看看http://www.php.net/parse_url</span></div><div class="line">$url = parse_url($url);</div><div class="line">$url_port = $url[<span class="string">'port'</span>]==<span class="string">''</span>?(($url[<span class="string">'scheme'</span>]==<span class="string">'https'</span>)?<span class="number">443</span>:<span class="number">80</span>):$url[<span class="string">'port'</span>];</div><div class="line"><span class="keyword">if</span>(!$url) <span class="keyword">return</span> <span class="string">"couldn't parse url"</span>;</div><div class="line"><span class="comment">//對要傳送的POST參數作處理</span></div><div class="line">$encoded = <span class="string">""</span>;</div><div class="line"><span class="keyword">while</span>(<span class="keyword">list</span>($k,$v)=each($data))&#123;</div><div class="line">  $encoded .= ($encoded?<span class="string">'&amp;'</span>:<span class="string">''</span>);</div><div class="line">  $encoded .= rawurlencode($k).<span class="string">"="</span>.rawurlencode($v);</div><div class="line">&#125;</div><div class="line"><span class="comment">//開啟一個socket</span></div><div class="line">$fp = fsockopen($url[<span class="string">'host'</span>],$url_port);</div><div class="line"><span class="keyword">if</span>(!$fp) <span class="keyword">return</span> <span class="string">"Failed to open socket to "</span>.$url[<span class="string">'host'</span>];</div><div class="line"><span class="comment">//header的資訊</span></div><div class="line">fputs($fp,<span class="string">'POST '</span>.$url[<span class="string">'path'</span>].($url[<span class="string">'query'</span>]?<span class="string">'?'</span>.$url[<span class="string">'query'</span>]:<span class="string">''</span>).<span class="string">" HTTP/1.0rn"</span>);</div><div class="line">fputs($fp,<span class="string">"Host: "</span>.$url[<span class="string">'host'</span>].<span class="string">"n"</span>);</div><div class="line">fputs($fp,<span class="string">"Content-type: application/x-www-form-urlencodedn"</span>);</div><div class="line">fputs($fp,<span class="string">"Content-length: "</span>.strlen($encoded).<span class="string">"n"</span>);</div><div class="line">fputs($fp,<span class="string">"Connection: closenn"</span>);</div><div class="line">fputs($fp,$encoded.<span class="string">"n"</span>);</div><div class="line"><span class="comment">//取得回應的內容</span></div><div class="line">$line = fgets($fp,<span class="number">1024</span>);</div><div class="line"><span class="keyword">if</span>(!eregi(<span class="string">"^HTTP/1.. 200"</span>, $line)) <span class="keyword">return</span>;</div><div class="line">$results = <span class="string">""</span>;</div><div class="line">$inheader = <span class="number">1</span>;</div><div class="line"><span class="keyword">while</span>(!feof($fp))&#123;</div><div class="line">  $line = fgets($fp,<span class="number">2048</span>);</div><div class="line">  <span class="keyword">if</span>($inheader&amp;&amp;($line == <span class="string">"n"</span> || $line == <span class="string">"rn"</span>))&#123;</div><div class="line">    $inheader = <span class="number">0</span>;</div><div class="line">  &#125;<span class="keyword">elseif</span>(!$inheader)&#123;</div><div class="line">    $results .= $line;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">fclose($fp);</div><div class="line"><span class="keyword">return</span> $results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p><a href="http://inspiregate.com/programming/php/26-php-to-use-fsockopen-to-send-post-to-another-url-and-get-to-respond-to-the-content.html" target="_blank" rel="external">http://inspiregate.com/programming/php/26-php-to-use-fsockopen-to-send-post-to-another-url-and-get-to-respond-to-the-content.html</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -810,7 +807,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-count">212</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

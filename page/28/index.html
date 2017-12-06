@@ -262,6 +262,112 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/07/phpize安装php扩展/" itemprop="url">
+                  phpize安装php扩展
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-07T14:30:32+08:00" content="2017-02-07">
+              2017-02-07
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><blockquote class="blockquote-center"><br>这十年来做过的事，能令你无悔骄傲吗？<br>那时候你所相信的事，应该没动摇吧？<br></blockquote><br>如果要安装的扩展在php源码ext目录中没有，那么这个扩展需要到<a href="http://pecl.php.net" target="_blank" rel="external">http://pecl.php.net</a> 搜索下载</p>
+<p>以安装libevent扩展为例（假设系统安装了libevent-dev库）</p>
+<h3 id="1、下载libevent扩展文件压缩包（在当前系统哪个目录下载随意）"><a href="#1、下载libevent扩展文件压缩包（在当前系统哪个目录下载随意）" class="headerlink" title="1、下载libevent扩展文件压缩包（在当前系统哪个目录下载随意）"></a>1、下载libevent扩展文件压缩包（在当前系统哪个目录下载随意）</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">~<span class="comment"># wget http://pecl.php.net/get/libevent-0.1.0.tgz</span></div><div class="line">-<span class="number">-2015</span><span class="number">-05</span><span class="number">-26</span> <span class="number">21</span>:<span class="number">43</span>:<span class="number">40</span>--  http:<span class="comment">//pecl.php.net/get/libevent-0.1.0.tgz</span></div><div class="line">Resolving pecl.php.net... <span class="number">104.236</span><span class="number">.228</span><span class="number">.160</span></div><div class="line">Connecting to pecl.php.net|<span class="number">104.236</span><span class="number">.228</span><span class="number">.160</span>|:<span class="number">80.</span>.. connected.</div><div class="line">HTTP request sent, awaiting response... <span class="number">200</span> OK</div><div class="line">Length: <span class="number">9806</span> (<span class="number">9.6</span>K) [application/octet-stream]</div><div class="line">Saving to: “libevent<span class="number">-0.1</span><span class="number">.0</span>.tgz”</div><div class="line"></div><div class="line"><span class="number">100</span>%[=======================================================&gt;] <span class="number">9</span>,<span class="number">806</span>       <span class="number">41.4</span>K/s   in <span class="number">0.2</span>s</div></pre></td></tr></table></figure>
+<h3 id="2、解压扩展文件压缩包"><a href="#2、解压扩展文件压缩包" class="headerlink" title="2、解压扩展文件压缩包"></a>2、解压扩展文件压缩包</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">~<span class="comment"># tar -zxvf libevent-0.1.0.tgz</span></div><div class="line">package.xml</div><div class="line">libevent<span class="number">-0.1</span><span class="number">.0</span>/config.m4</div><div class="line">libevent<span class="number">-0.1</span><span class="number">.0</span>/CREDITS</div><div class="line">libevent<span class="number">-0.1</span><span class="number">.0</span>/libevent.c</div><div class="line">....</div></pre></td></tr></table></figure>
+<h3 id="3、进入到源码目录"><a href="#3、进入到源码目录" class="headerlink" title="3、进入到源码目录"></a>3、进入到源码目录</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~<span class="comment"># cd libevent-0.1.0/</span></div></pre></td></tr></table></figure>
+<h3 id="4、运行phpize命令"><a href="#4、运行phpize命令" class="headerlink" title="4、运行phpize命令"></a>4、运行phpize命令</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">~<span class="comment"># phpize</span></div><div class="line">Configuring <span class="keyword">for</span>:</div><div class="line">PHP Api Version:         <span class="number">20090626</span></div><div class="line">Zend Module Api No:      <span class="number">20090626</span></div><div class="line">Zend Extension Api No:   <span class="number">220090626</span></div></pre></td></tr></table></figure>
+<h3 id="5、运行configure命令"><a href="#5、运行configure命令" class="headerlink" title="5、运行configure命令"></a>5、运行configure命令</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">~<span class="comment"># ./configure</span></div><div class="line">checking <span class="keyword">for</span> grep that handles long lines <span class="keyword">and</span> -e... /bin/grep</div><div class="line">checking <span class="keyword">for</span> egrep... /bin/grep -E</div><div class="line">checking <span class="keyword">for</span> a sed that does not truncate output... /bin/sed</div><div class="line">checking <span class="keyword">for</span> cc... cc</div><div class="line">checking whether the C compiler works... yes</div><div class="line">...</div></pre></td></tr></table></figure>
+<h3 id="6、运行make命令"><a href="#6、运行make命令" class="headerlink" title="6、运行make命令"></a>6、运行make命令</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">~<span class="comment"># /bin/bash /data/test/libevent-0.1.0/libtool --mode=compile cc  -I. -I/data/test/libevent-0.1.0 -DPHP_ATOM_INC -I/data/test/libevent-0.1.0/include</span></div><div class="line">...</div></pre></td></tr></table></figure>
+<h3 id="7、运行make-install命令"><a href="#7、运行make-install命令" class="headerlink" title="7、运行make install命令"></a>7、运行make install命令</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">~<span class="comment"># make install</span></div><div class="line">Installing shared extensions:     /usr/lib/php5/<span class="number">20090626</span>/</div></pre></td></tr></table></figure>
+<h3 id="8、配置ini文件"><a href="#8、配置ini文件" class="headerlink" title="8、配置ini文件"></a>8、配置ini文件</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">通过运行 php --ini查找php.ini文件位置，然后在文件中添加extension=libevent.so</div></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="http://doc3.workerman.net/appendices/install-extension.html" target="_blank" rel="external">http://doc3.workerman.net/appendices/install-extension.html</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/07/关于php的PECL和PEAR/" itemprop="url">
                   关于php的PECL和PEAR
                 </a>
@@ -657,100 +763,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/16/我的2017/" itemprop="url">
-                  我的2017
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-16T16:52:19+08:00" content="2017-01-16">
-              2017-01-16
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><blockquote class="blockquote-center"><br>你还记得她吗？<br>早就忘了。<br>我还没说她是谁。<br></blockquote><br>2016，已然远去<br>2017，请继续努力<br>拜托了</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -796,7 +808,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-count">212</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

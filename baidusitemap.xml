@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>http://yangguoqi.me/2017/12/12/%E4%BD%BF%E7%94%A8javascript%E7%94%9F%E6%88%90%E6%9D%A1%E5%BD%A2%E7%A0%81/</loc>
+    <lastmod>2017-12-12T11:25:47.122Z</lastmod>
+    <data>
+        <display>
+        <title>使用javascript生成条形码</title>
+        <pubTime>2017-12-12T11:06:03.000Z</pubTime>
+        
+        <tag>javascript</tag>
+         
+        <tag>条形码</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yangguoqi.me/2017/12/05/laravel%E5%9C%A8%E5%8F%91%E7%94%9F%E5%BC%82%E5%B8%B8%E9%94%99%E8%AF%AF%E6%97%B6%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5/</loc>
     <lastmod>2017-12-06T05:59:12.618Z</lastmod>
     <data>
@@ -1249,9 +1268,9 @@
          
         <tag>加密</tag>
          
-        <tag>常识</tag>
-         
         <tag>签名</tag>
+         
+        <tag>常识</tag>
          
          
            
@@ -3747,9 +3766,9 @@
         <title>centos下ftp相关设置</title>
         <pubTime>2016-07-25T14:56:59.000Z</pubTime>
         
-        <tag>linux</tag>
-         
         <tag>centos</tag>
+         
+        <tag>linux</tag>
          
         <tag>ftp</tag>
          

@@ -92,7 +92,7 @@
 <meta property="og:site_name" content="杨子鳄的小窝">
 <meta property="og:description" content="人生本无意义，唯有寻趣。 一个简单的例子123456789101112Event::listen(&apos;eloquent.created: App\User&apos;, function () &amp;#123;Log::info(&apos;haha&apos;);&amp;#125;);Route::get(&apos;hehe&apos;, function ()&amp;#123;\App\User::forceCreate([&apos;name&apos; =&amp;gt; &apos;yan">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-05-09T08:15:45.000Z">
+<meta property="og:updated_time" content="2017-12-22T11:05:32.997Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel中的模型事件">
 <meta name="twitter:description" content="人生本无意义，唯有寻趣。 一个简单的例子123456789101112Event::listen(&apos;eloquent.created: App\User&apos;, function () &amp;#123;Log::info(&apos;haha&apos;);&amp;#125;);Route::get(&apos;hehe&apos;, function ()&amp;#123;\App\User::forceCreate([&apos;name&apos; =&amp;gt; &apos;yan">
@@ -320,8 +320,10 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">handle</span><span class="params">(UserCreated $event)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	$post = $event-&gt;post;</div><div class="line">	\Log::info($post);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>在事件文件中:<br>app\Events\UserCreated.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> $post;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($post)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="keyword">$this</span>-&gt;post = $post;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> $post;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($post)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="keyword">$this</span>-&gt;post = $post;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 </ul>
+<h3 id="Observer写法-推荐"><a href="#Observer写法-推荐" class="headerlink" title="Observer写法(推荐)"></a>Observer写法(推荐)</h3><p><a href="https://laravel-china.org/articles/6657/model-events-and-observer-in-laravel" target="_blank" rel="external">https://laravel-china.org/articles/6657/model-events-and-observer-in-laravel</a></p>
 
       
     </div>
@@ -430,7 +432,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">217</span>
+              <span class="site-state-item-count">219</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -440,7 +442,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">100</span>
+                <span class="site-state-item-count">101</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -510,7 +512,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单的例子"><span class="nav-number">1.</span> <span class="nav-text">一个简单的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较规整的写法"><span class="nav-number">2.</span> <span class="nav-text">比较规整的写法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单的例子"><span class="nav-number">1.</span> <span class="nav-text">一个简单的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较规整的写法"><span class="nav-number">2.</span> <span class="nav-text">比较规整的写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Observer写法-推荐"><span class="nav-number">3.</span> <span class="nav-text">Observer写法(推荐)</span></a></li></ol></div>
             
           </div>
         </section>

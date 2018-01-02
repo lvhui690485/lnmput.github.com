@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://yangguoqi.me/2018/01/02/php%E4%B8%AD%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E8%B0%83%E7%94%A8/</loc>
+    <lastmod>2018-01-02T04:08:44.256Z</lastmod>
+    <data>
+        <display>
+        <title>php中函数和方法的调用</title>
+        <pubTime>2018-01-02T03:28:52.000Z</pubTime>
+        
+        <tag>PHP</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yangguoqi.me/2017/12/27/%E4%B8%80%E4%B8%AA%E5%9B%A0number-format%E5%BC%95%E8%B5%B7%E7%9A%84bug/</loc>
     <lastmod>2017-12-27T07:33:22.899Z</lastmod>
     <data>
@@ -1309,9 +1326,9 @@
          
         <tag>php</tag>
          
-        <tag>IP</tag>
-         
         <tag>python投票</tag>
+         
+        <tag>IP</tag>
          
          
            
